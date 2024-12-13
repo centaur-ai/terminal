@@ -61,18 +61,8 @@ function App({ toggleTheme, darkMode }) {
           <Avatar
             src="../../public/centaur_logo.png"
             sx={{
-              marginRight: "10px",
-              width: 80,
-              height: 80,
-              animation: "initialRotate 2s ease-out",
-              "@keyframes initialRotate": {
-                "0%": {
-                  transform: "rotateY(0deg)",
-                },
-                "100%": {
-                  transform: "rotateY(360deg)",
-                },
-              },
+              width: 120,
+              height: 120,
               transition: "transform 2s ease-in-out",
               "&:hover": {
                 transform: "rotateY(360deg)",
