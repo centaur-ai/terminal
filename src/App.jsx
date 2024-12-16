@@ -59,14 +59,12 @@ function App({ toggleTheme, darkMode }) {
           }}
         >
           <Avatar
-            src="../../public/centaur_logo.png"
+            src="../../public/Logo_v1.png"
             sx={{
               width: 120,
               height: 120,
-              transition: "transform 2s ease-in-out",
-              "&:hover": {
-                transform: "rotateY(360deg)",
-              },
+              transition: "transform 2s ease-in-out, box-shadow 0.5s ease-in-out",
+              boxShadow: "0 0 10px #a0a0a0, 0 0 20px #a0a0a0, 0 0 30px #a0a0a0",
             }}
           />
           <Card
