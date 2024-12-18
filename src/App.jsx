@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
   const navigate = useNavigate();
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const suggestions = [
     {
@@ -25,7 +26,17 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
 
   const handleClick = (suggestion) => {
     setSelectedSuggestion(suggestion);
+    setIsTransitioning(true);
   };
+
+  useEffect(() => {
+    if (isTransitioning) {
+      const timer = setTimeout(() => {
+        navigate("/reasoning");
+      }, 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning, navigate]);
 
   return (
     <Box
@@ -65,6 +76,7 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
         }}
       >
         <Avatar
+          className={isTransitioning ? "fade-out" : "fade-in"}
           src="../../public/centaur_logo.png"
           sx={{
             width: 120,
@@ -76,6 +88,7 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
           }}
         />
         <Card
+          className={isTransitioning ? "fade-out" : "fade-in"}
           sx={{
             display: "flex",
             flexDirection: "column",
