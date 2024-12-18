@@ -2,7 +2,7 @@ import "./index.css";
 
 import { StrictMode, useState } from "react";
 
-import App from "./App.jsx";
+import AppRoutes from "./AppRoutes.jsx";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { createRoot } from "react-dom/client";
@@ -18,7 +18,7 @@ function Container() {
   return (
     <ThemeProvider theme={getTheme(darkMode)}>
       <CssBaseline />
-      <App toggleTheme={toggleTheme} darkMode={darkMode} />
+      <AppRoutes toggleTheme={toggleTheme} darkMode={darkMode} />
     </ThemeProvider>
   );
 }
