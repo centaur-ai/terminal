@@ -77,7 +77,7 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
       >
         <Avatar
           className={isTransitioning ? "fade-out" : "fade-in"}
-          src="../../public/centaur_logo.png"
+          src="../../public/Logo_v1.png"
           sx={{
             width: 120,
             height: 120,
