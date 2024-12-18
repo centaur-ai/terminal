@@ -8,7 +8,7 @@ import {
   Fab,
   Typography,
 } from "@mui/material";
-
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import React from "react";
 
@@ -57,12 +57,24 @@ const ReasoningBox = ({ selectedSuggestion, evaluate }) => {
             width: "100%",
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{ fontWeight: "bold", textAlign: "center" }}
-          >
-            {selectedSuggestion.description}
-          </Typography>
+            <Typography
+              sx={{ textAlign: "center", fontSize: "18px" }}
+            >
+              {selectedSuggestion.description}
+            <Box>
+              <br/>
+              <AutoAwesomeIcon
+                sx={{
+                  animation: "flash 2s infinite",
+                  "@keyframes flash": {
+                    "0%": { opacity: 1 },
+                    "50%": { opacity: 0 },
+                    "100%": { opacity: 1 },
+                  },
+                }}
+              />
+            </Box>
+            </Typography>
           <Divider sx={{ mt: 2, mb: 2 }} />
         </Box>
         {evaluate.map((item, index) => (
