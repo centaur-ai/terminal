@@ -1,5 +1,5 @@
 import React from "react";
-import ReasoningDetails from "../components/Reasoning/ReasoningDetails";
+import ReasoningBox from "../components/Reasoning/ReasoningBox";
 import useEvaluate from "../hooks/useEvaluate";
 
 const Reasoning = ({ selectedSuggestion }) => {
@@ -7,7 +7,7 @@ const Reasoning = ({ selectedSuggestion }) => {
 
   return (
     <>
-      <ReasoningDetails
+      <ReasoningBox
         evaluate={evaluate}
         selectedSuggestion={selectedSuggestion}
       />
