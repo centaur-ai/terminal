@@ -5,6 +5,7 @@ import Chat from "./components/Chat/Chat";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Suggestions from "./components/Suggestions/Suggestions";
 import { useNavigate } from "react-router-dom";
+import SpotlightEffect from "./components/SpotlightEffect";
 
 function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
         padding: "20px",
       }}
     >
+      <SpotlightEffect />
       <IconButton
         color="primary"
         onClick={toggleTheme}
@@ -81,10 +83,8 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
           sx={{
             width: 120,
             height: 120,
-            transition: "transform 2s ease-in-out",
-            "&:hover": {
-              transform: "rotateY(360deg)",
-            },
+            transition: "transform 2s ease-in-out, box-shadow 0.5s ease-in-out",
+            boxShadow: "0 0 10px #a0a0a0, 0 0 20px #a0a0a0, 0 0 30px #a0a0a0",
           }}
         />
         <Card
@@ -94,7 +94,7 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            height: "60vh",
+            height: "55vh",
             width: "50vw",
             padding: "25px",
             borderRadius: "20px",
