@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from "@mui/material";
 
 import React from "react";
 
-function Suggestions({ suggestion }) {
+function Suggestions({ suggestion, handleClick }) {
   return (
     <Button
       variant="contained"
@@ -20,6 +20,7 @@ function Suggestions({ suggestion }) {
         sx={{
           height: "80px",
         }}
+        onClick={() => handleClick(suggestion)}
       >
         <Typography sx={{ fontWeight: "bold", textAlign: "left" }}>
           {suggestion.summary}
