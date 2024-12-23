@@ -8,7 +8,7 @@ function useEvaluate() {
   const [evaluate, setEvaluate] = useState([]);
   const [message, setMessage] = useState({
     content: "",
-    pwl: "",
+    pwl: false,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
