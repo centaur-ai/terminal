@@ -1,8 +1,9 @@
-import cors from "cors";
-import express from "express";
+const cors = require("cors");
+const express = require("express");
 
 const app = express();
 
+app.use(express.json());
 app.use(cors());
 
 app.get("/evaluate", (req, res) => {
@@ -35,6 +36,22 @@ app.get("/evaluate", (req, res) => {
     clearInterval(intervalId);
     console.log("Client disconnected");
   });
+});
+
+app.post("/evaluate", (req, res) => {
+  const { content, pwl } = req.body;
+
+  if (!content) {
+    return res.status(400).send("Content is required");
+  }
+
+  console.log("Message received:", content);
+
+  if (pwl) {
+    console.log("PWL value:", pwl);
+  }
+
+  res.status(200).json({ status: "Message received", content, pwl });
 });
 
 app.listen(3000, () => {

@@ -3,27 +3,14 @@ import React, { useEffect, useState } from "react";
 
 import Chat from "./components/Chat/Chat";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import Suggestions from "./components/Suggestions/Suggestions";
-import { useNavigate } from "react-router-dom";
 import SpotlightEffect from "./components/SpotlightEffect";
+import Suggestions from "./components/Suggestions/Suggestions";
+import suggestions from "./utils/suggestions";
+import { useNavigate } from "react-router-dom";
 
 function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
   const navigate = useNavigate();
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const suggestions = [
-    {
-      id: 1,
-      summary: "Socrates",
-      description: "All humans are mortal, and Socrates is human",
-    },
-    {
-      id: 2,
-      summary: "Agatha",
-      description:
-        "The butler claims he was polishing the silver in the dining room when the shot was fired.",
-    },
-  ];
 
   const handleClick = (suggestion) => {
     setSelectedSuggestion(suggestion);
@@ -94,7 +81,7 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            height: "55vh",
+            height: "60vh",
             width: "50vw",
             padding: "25px",
             borderRadius: "20px",
