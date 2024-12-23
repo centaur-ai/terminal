@@ -9,11 +9,13 @@ import {
 import React, { useState } from "react";
 
 import SendIcon from "@mui/icons-material/Send";
+import useEvaluate from "../../hooks/useEvaluate";
 
 function Chat() {
   const [toggle, setToggle] = useState(false);
   const [text, setText] = useState("");
 
+  const { postMessage } = useEvaluate();
 
   const handleToggle = () => {
     setToggle((prev) => !prev);
@@ -23,6 +25,9 @@ function Chat() {
     setText(event.target.value);
   };
 
+  const handleSend = () => {
+    postMessage(text, toggle ? "true" : undefined);
+  };
 
   return (
     <Box
@@ -47,6 +52,7 @@ function Chat() {
       <IconButton
         color="primary"
         disabled={!text}
+        onClick={handleSend}
         sx={{
           position: "absolute",
           bottom: 15,
