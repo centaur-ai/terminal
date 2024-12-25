@@ -1,21 +1,13 @@
-import {
-  Box,
-  FormControlLabel,
-  IconButton,
-  Switch,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Switch, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 import SendIcon from "@mui/icons-material/Send";
-import useEvaluate from "../../hooks/useEvaluate";
+import { useNavigate } from "react-router-dom";
 
-function Chat() {
+function Chat({ text, setText, postMessage }) {
   const [toggle, setToggle] = useState(false);
-  const [text, setText] = useState("");
 
-  const { postMessage } = useEvaluate();
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setToggle((prev) => !prev);
@@ -25,8 +17,18 @@ function Chat() {
     setText(event.target.value);
   };
 
-  const handleSend = () => {
-    postMessage(text, toggle ? "true" : undefined);
+  const handleSend = async () => {
+    try {
+      const responseData = await postMessage(text, toggle ? "true" : undefined);
+
+      if (responseData && responseData.id) {
+        navigate(`/reasoning/${responseData.id}`);
+      } else {
+        console.error("Invalid response data:", responseData);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
   return (
@@ -82,7 +84,7 @@ function Chat() {
             position: "absolute",
             right: 60,
             bottom: 7,
-            color: toggle ? "white" : "grey.700",
+            color: toggle ? "primary.main" : "grey.700",
           }}
         >
           PWL
