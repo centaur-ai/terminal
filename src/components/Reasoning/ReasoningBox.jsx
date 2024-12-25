@@ -8,11 +8,35 @@ import {
   Fab,
   Typography,
 } from "@mui/material";
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import React from "react";
+import React, { useEffect } from "react";
 
-const ReasoningBox = ({ selectedSuggestion, evaluate }) => {
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+
+const ReasoningBox = ({
+  selectedSuggestion,
+  evaluate,
+  setSelectedSuggestion,
+  setText,
+  file,
+  message,
+}) => {
+  useEffect(() => {
+    const savedSuggestion = localStorage.getItem("selectedSuggestion");
+    if (savedSuggestion) {
+      setSelectedSuggestion(JSON.parse(savedSuggestion));
+    }
+  }, [setSelectedSuggestion]);
+
+  useEffect(() => {
+    if (selectedSuggestion) {
+      localStorage.setItem(
+        "selectedSuggestion",
+        JSON.stringify(selectedSuggestion)
+      );
+    }
+  }, [selectedSuggestion]);
+
   return (
     <Box
       sx={{
@@ -33,7 +57,12 @@ const ReasoningBox = ({ selectedSuggestion, evaluate }) => {
           left: "20px",
         }}
         size="small"
-        onClick={() => window.history.back()}
+        onClick={() => {
+          window.history.back();
+          setSelectedSuggestion(null);
+          setText("");
+          localStorage.removeItem("selectedSuggestion");
+        }}
       >
         <KeyboardBackspaceIcon />
       </Fab>
@@ -57,12 +86,10 @@ const ReasoningBox = ({ selectedSuggestion, evaluate }) => {
             width: "100%",
           }}
         >
-            <Typography
-              sx={{ textAlign: "center", fontSize: "18px" }}
-            >
-              {selectedSuggestion.description}
+          <Typography sx={{ textAlign: "center", fontSize: "18px" }}>
+            {selectedSuggestion ? file.description : message.content}
             <Box>
-              <br/>
+              <br />
               <AutoAwesomeIcon
                 sx={{
                   animation: "flash 2s infinite",
@@ -74,7 +101,7 @@ const ReasoningBox = ({ selectedSuggestion, evaluate }) => {
                 }}
               />
             </Box>
-            </Typography>
+          </Typography>
           <Divider sx={{ mt: 2, mb: 2 }} />
         </Box>
         {evaluate.map((item, index) => (
