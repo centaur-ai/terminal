@@ -36,11 +36,13 @@ function Chat({ text, setText, postMessage }) {
       sx={{
         position: "relative",
         width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <TextField
         multiline
-        rows={11}
         fullWidth
         placeholder="Ask me a question"
         variant="outlined"
@@ -49,6 +51,14 @@ function Chat({ text, setText, postMessage }) {
         sx={{
           borderRadius: "8px",
           marginBottom: "10px",
+          flex: 1,
+          "& .MuiInputBase-root": {
+            height: "100%",
+          },
+          "& .MuiInputBase-input": {
+            height: "100% !important",
+            overflowY: "auto",
+          },
         }}
       />
       <IconButton
