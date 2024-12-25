@@ -1,10 +1,13 @@
 const cors = require("cors");
 const express = require("express");
+const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+let postData = {};
 
 app.get("/evaluate", (req, res) => {
   res.writeHead(200, {
@@ -23,6 +26,8 @@ app.get("/evaluate", (req, res) => {
         descriptions[Math.floor(Math.random() * descriptions.length)],
       data: Math.random() * 100,
       rate: Math.random() * 10,
+      content: postData.content,
+      desc: postData.description,
     };
 
     return `data: ${JSON.stringify(data)}\n\n`;
@@ -39,19 +44,39 @@ app.get("/evaluate", (req, res) => {
 });
 
 app.post("/evaluate", (req, res) => {
-  const { content, pwl } = req.body;
+  const { content, pwl, file, description } = req.body;
+  const id = uuidv4();
 
-  if (!content) {
-    return res.status(400).send("Content is required");
+  if (content !== undefined) {
+    if (!content) {
+      return res.status(400).send("Content is required");
+    }
+    console.log("Message received:", content);
+    console.log("Message received:", content);
+
+    console.log("Message received:", content);
+
+    if (pwl) {
+      console.log("PWL value:", pwl);
+    }
+    postData = { content, description };
+    return res
+      .status(200)
+      .json({ status: "Message received", content, pwl, id });
   }
 
-  console.log("Message received:", content);
-
-  if (pwl) {
-    console.log("PWL value:", pwl);
+  if (file !== undefined) {
+    if (!file) {
+      return res.status(400).send("File is required");
+    }
+    console.log("File received:", file);
+    postData = { file, description };
+    return res
+      .status(200)
+      .json({ status: "Message received", file, id, description });
   }
 
-  res.status(200).json({ status: "Message received", content, pwl });
+  return res.status(400).send("Either content or file is required");
 });
 
 app.listen(3000, () => {
