@@ -15,11 +15,15 @@ import Suggestions from "./components/Suggestions/Suggestions";
 import suggestions from "./utils/suggestions";
 import { useNavigate } from "react-router-dom";
 
-function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
 function App({
   setSelectedSuggestion,
   toggleTheme,
   darkMode,
+  text,
+  setText,
+  selectedSuggestion,
+  postFile,
+  postMessage,
 }) {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm")); // 0 - 600
@@ -32,12 +36,13 @@ function App({
   const handleClick = (suggestion) => {
     setSelectedSuggestion(suggestion);
     setIsTransitioning(true);
+    postFile(suggestion.file, suggestion.id, suggestion.description);
   };
 
   useEffect(() => {
     if (isTransitioning) {
       const timer = setTimeout(() => {
-        navigate("/reasoning");
+        navigate(`/reasoning/${selectedSuggestion.id}`);
       }, 1200);
       return () => clearTimeout(timer);
     }
@@ -118,6 +123,7 @@ function App({
               marginBottom: 2,
             }}
           >
+            <Chat text={text} setText={setText} postMessage={postMessage} />
           </Box>
           <Box
             sx={{
