@@ -10,6 +10,11 @@ function useEvaluate() {
     content: "",
     pwl: false,
   });
+  const [file, setFile] = useState({
+    id: "",
+    file: "",
+    description: "",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { handleResponse } = useApi();
@@ -46,6 +51,20 @@ function useEvaluate() {
       setMessage(response.data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  const postFile = useCallback(async (file, id, description) => {
+    const payload = { file, id, description };
+    try {
+      const response = await http.post(`/evaluate`, payload);
+      const result = await handleResponse(response, (res) => {
+        if (res && res.data) {
+          setFile(res.data);
+        }
+      });
+      return result.data;
+    } catch (error) {
+      console.error("Error posting file:", error);
+      throw error;
+    }
   }, []);
 
   return {
@@ -54,6 +73,8 @@ function useEvaluate() {
     evaluate,
     postMessage,
     message,
+    postFile,
+    file,
   };
 }
 
