@@ -4,22 +4,23 @@ function useApi() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const handleResponse = async (promise, callback, successCallback) => {
+  const handleResponse = async (promise, callback) => {
     setLoading(true);
     setError(null);
     try {
       const response = await promise;
-      callback(response);
-      if (successCallback) {
-        successCallback();
+      if (callback) {
+        callback(response);
       }
-      return response.data;
+      return response;
     } catch (err) {
       setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
+
   return { loading, error, handleResponse };
 }
 
