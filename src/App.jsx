@@ -1,39 +1,48 @@
-import { Avatar, Box, Card, IconButton } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 import Chat from "./components/Chat/Chat";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
-import Suggestions from "./components/Suggestions/Suggestions";
-import { useNavigate } from "react-router-dom";
 import SpotlightEffect from "./components/SpotlightEffect";
+import Suggestions from "./components/Suggestions/Suggestions";
+import suggestions from "./utils/suggestions";
+import { useNavigate } from "react-router-dom";
 
-function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
+function App({
+  setSelectedSuggestion,
+  toggleTheme,
+  darkMode,
+  text,
+  setText,
+  selectedSuggestion,
+  postFile,
+  postMessage,
+}) {
+  const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down("sm")); // 0 - 600
+  const smAndMd = useMediaQuery(theme.breakpoints.between("sm", "md")); // 600 - 900
+  const mdAndLg = useMediaQuery(theme.breakpoints.between("md", "lg")); // 900 - 1200
+
   const navigate = useNavigate();
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const suggestions = [
-    {
-      id: 1,
-      summary: "Socrates",
-      description: "All humans are mortal, and Socrates is human",
-    },
-    {
-      id: 2,
-      summary: "Agatha",
-      description:
-        "The butler claims he was polishing the silver in the dining room when the shot was fired.",
-    },
-  ];
 
   const handleClick = (suggestion) => {
     setSelectedSuggestion(suggestion);
     setIsTransitioning(true);
+    postFile(suggestion.file, suggestion.id, suggestion.description);
   };
 
   useEffect(() => {
     if (isTransitioning) {
       const timer = setTimeout(() => {
-        navigate("/reasoning");
+        navigate(`/reasoning/${selectedSuggestion.id}`);
       }, 1200);
       return () => clearTimeout(timer);
     }
@@ -94,25 +103,40 @@ function App({ setSelectedSuggestion, toggleTheme, darkMode }) {
             flexDirection: "column",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            height: "55vh",
-            width: "50vw",
+            height: "60vh",
+            width: mdAndLg
+              ? "70vw"
+              : smAndMd
+              ? "90vw"
+              : smDown
+              ? "none"
+              : "50vw",
             padding: "25px",
             borderRadius: "20px",
             backgroundColor: "background.paper",
           }}
         >
-          <Chat />
+          <Box
+            sx={{
+              width: "100%",
+              flex: 1,
+              marginBottom: 2,
+            }}
+          >
+            <Chat text={text} setText={setText} postMessage={postMessage} />
+          </Box>
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              width: "100%",
+              width: smDown ? "350px" : "100%",
               gap: "10px",
             }}
           >
             {suggestions.map((suggestion) => (
               <Suggestions
+                smDown={smDown}
                 key={suggestion.id}
                 suggestion={suggestion}
                 handleClick={handleClick}
