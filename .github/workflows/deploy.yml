@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set config for live
+        run: cp config.live.js config.js
+
       - name: Build project
         run: npm run build
 
