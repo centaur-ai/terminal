@@ -9,7 +9,7 @@ app.use(cors());
 
 let postData = {};
 
-app.get("/evaluate", (req, res) => {
+app.get("/evaluate/:id", (req, res) => {
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",

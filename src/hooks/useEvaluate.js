@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-
 import config from "../../config";
 import http from "../http/index";
 import useApi from "./useApi";
+import { useParams } from 'react-router-dom';
 
 function useEvaluate() {
+  const { id } = useParams();
   const [evaluate, setEvaluate] = useState([]);
   const [message, setMessage] = useState({
     id: "",
@@ -21,7 +22,7 @@ function useEvaluate() {
   const { handleResponse } = useApi();
 
   const establishEventSource = useCallback(() => {
-    const eventSource = new EventSource(`${config.api}/evaluate`);
+    const eventSource = new EventSource(`${config.api}/evaluate/${id}`);
 
     eventSource.onmessage = (event) => {
       try {

@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start:server": "npm --prefix ./server start"
+    "server:start": "npm --prefix ./server start"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
