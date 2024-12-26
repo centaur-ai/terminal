@@ -88,7 +88,7 @@ function App({
       >
         <Avatar
           className={isTransitioning ? "fade-out" : "fade-in"}
-          src="../../public/Logo_v1.png"
+          src="/Logo_v1.png"
           sx={{
             width: 120,
             height: 120,
