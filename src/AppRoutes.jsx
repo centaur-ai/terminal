@@ -9,23 +9,11 @@ const AppRoutes = ({ toggleTheme, darkMode }) => {
   const [selectedSuggestion, setSelectedSuggestion] = React.useState(null);
   const [text, setText] = React.useState("");
 
-  const { postFile, file, postMessage, message } = useEvaluate();
+  const { postFile, postMessage } = useEvaluate();
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/reasoning/:id"
-          element={
-            <Reasoning
-              file={file}
-              message={message}
-              setText={setText}
-              setSelectedSuggestion={setSelectedSuggestion}
-              selectedSuggestion={selectedSuggestion}
-            />
-          }
-        />
         <Route
           path="/"
           element={
@@ -38,6 +26,16 @@ const AppRoutes = ({ toggleTheme, darkMode }) => {
               setSelectedSuggestion={setSelectedSuggestion}
               toggleTheme={toggleTheme}
               darkMode={darkMode}
+            />
+          }
+        />
+        <Route
+          path="/reasoning/:id"
+          element={
+            <Reasoning
+              setText={setText}
+              setSelectedSuggestion={setSelectedSuggestion}
+              selectedSuggestion={selectedSuggestion}
             />
           }
         />

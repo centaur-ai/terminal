@@ -141,7 +141,7 @@ const ReasoningBox = ({
                 }}
                 textAlign={"center"}
               >
-                {item.rate}
+                Theory Probability: {item.rate}
               </Typography>
             </AccordionDetails>
           </React.Fragment>
