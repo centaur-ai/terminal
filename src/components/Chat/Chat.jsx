@@ -19,13 +19,9 @@ function Chat({ text, setText, postMessage }) {
 
   const handleSend = async () => {
     try {
-      const responseData = await postMessage(text, toggle ? "true" : undefined);
+      const { id } = await postMessage(text, toggle ? "true" : undefined);
 
-      if (responseData && responseData.id) {
-        navigate(`/reasoning/${responseData.id}`);
-      } else {
-        console.error("Invalid response data:", responseData);
-      }
+      navigate(`/reasoning/${id}`);
     } catch (error) {
       console.error("Error sending message:", error);
     }

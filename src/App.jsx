@@ -35,8 +35,8 @@ function App({
   const handleClick = async (suggestion) => {
     setSelectedSuggestion(suggestion);
     setIsTransitioning(true);
-    await postFile(suggestion);
-    navigate(`/reasoning/${suggestion.id}`);
+    const { id } = await postFile(suggestion);
+    navigate(`/reasoning/${id}`);
   };
 
   return (
