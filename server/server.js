@@ -33,6 +33,8 @@ app.get("/evaluate/:id", (req, res) => {
     return `data: ${JSON.stringify(data)}\n\n`;
   };
 
+  res.write(`data: ${JSON.stringify({"type": "system", "event": "stream_start", "description": "Logical Description"})}\n\n`);
+
   const intervalId = setInterval(() => {
     res.write(generateData());
   }, 1000);

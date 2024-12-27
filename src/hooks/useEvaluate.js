@@ -7,16 +7,7 @@ import { useParams } from 'react-router-dom';
 function useEvaluate() {
   const { id } = useParams();
   const [evaluate, setEvaluate] = useState([]);
-  const [message, setMessage] = useState({
-    id: "",
-    content: "",
-    pwl: false,
-  });
-  const [file, setFile] = useState({
-    id: "",
-    file: "",
-    description: "",
-  });
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { handleResponse } = useApi();
@@ -27,20 +18,11 @@ function useEvaluate() {
     eventSource.onmessage = (event) => {
       try {
         const newData = JSON.parse(event.data);
-        setEvaluate((prevEvaluate) => [newData, ...prevEvaluate]);
-        if (newData.content) {
-          setMessage((prevMessage) => ({
-            ...prevMessage,
-            content: newData.content,
-          }));
+        if(newData.type === "system" && newData.event === "stream_start") {
+          setDescription(newData.description);
+        } else {
+          setEvaluate((prevEvaluate) => [newData, ...prevEvaluate]);
         }
-        if (newData.desc) {
-          setFile((prevFile) => ({
-            ...prevFile,
-            description: newData.desc,
-          }));
-        }
-        setLoading(false);
       } catch (error) {
         console.error("Error parsing event data:", error);
         setError(error);
@@ -65,9 +47,7 @@ function useEvaluate() {
     try {
       const response = await http.post(`/evaluate`, payload);
       const result = await handleResponse(response, (res) => {
-        if (res && res.data) {
-          setMessage(res.data);
-        }
+        setDescription(res.data.description);
       });
       return result.data;
     } catch (error) {
@@ -76,14 +56,11 @@ function useEvaluate() {
     }
   }, []);
 
-  const postFile = useCallback(async (file, id, description) => {
-    const payload = { file, id, description };
+  const postFile = useCallback(async (payload) => {
     try {
       const response = await http.post(`/evaluate`, payload);
       const result = await handleResponse(response, (res) => {
-        if (res && res.data) {
-          setFile(res.data);
-        }
+        setDescription(res.data.description);
       });
       return result.data;
     } catch (error) {
@@ -94,8 +71,7 @@ function useEvaluate() {
 
   useEffect(() => {
     if (window.location.pathname === "/") return;
-    const cleanup = establishEventSource();
-    return cleanup;
+    return establishEventSource();
   }, [establishEventSource]);
 
   return {
@@ -103,9 +79,8 @@ function useEvaluate() {
     error,
     evaluate,
     postMessage,
-    message,
     postFile,
-    file,
+    description,
   };
 }
 

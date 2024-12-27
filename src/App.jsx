@@ -21,7 +21,6 @@ function App({
   darkMode,
   text,
   setText,
-  selectedSuggestion,
   postFile,
   postMessage,
 }) {
@@ -33,20 +32,12 @@ function App({
   const navigate = useNavigate();
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleClick = (suggestion) => {
+  const handleClick = async (suggestion) => {
     setSelectedSuggestion(suggestion);
     setIsTransitioning(true);
-    postFile(suggestion.file, suggestion.id, suggestion.description);
+    await postFile(suggestion);
+    navigate(`/reasoning/${suggestion.id}`);
   };
-
-  useEffect(() => {
-    if (isTransitioning) {
-      const timer = setTimeout(() => {
-        navigate(`/reasoning/${selectedSuggestion.id}`);
-      }, 1200);
-      return () => clearTimeout(timer);
-    }
-  }, [isTransitioning, navigate]);
 
   return (
     <Box

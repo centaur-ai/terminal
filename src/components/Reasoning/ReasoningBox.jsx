@@ -14,12 +14,10 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 const ReasoningBox = ({
-  selectedSuggestion,
   evaluate,
   setSelectedSuggestion,
   setText,
-  file,
-  message,
+  description
 }) => {
   return (
     <Box
@@ -70,7 +68,7 @@ const ReasoningBox = ({
           }}
         >
           <Typography sx={{ textAlign: "center", fontSize: "18px" }}>
-            {selectedSuggestion ? file.description : message.content}
+            {description}
             <Box>
               <br />
               <AutoAwesomeIcon
