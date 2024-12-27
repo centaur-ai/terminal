@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import config from "../../config";
 import http from "../http/index";
 import useApi from "./useApi";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 function useEvaluate() {
   const { id } = useParams();
@@ -43,7 +43,13 @@ function useEvaluate() {
   }, []);
 
   const postMessage = useCallback(async (content, pwl) => {
-    const payload = { content, pwl };
+    if (!pwl) {
+      alert(
+        "DELPH-IN integration still in development, please enable PWL mode");
+      return;
+    }
+
+    const payload = { description: content, pwl };
     try {
       const response = await http.post(`/evaluate`, payload);
       const result = await handleResponse(response, (res) => {
