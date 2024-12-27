@@ -21,22 +21,6 @@ const ReasoningBox = ({
   file,
   message,
 }) => {
-  useEffect(() => {
-    const savedSuggestion = localStorage.getItem("selectedSuggestion");
-    if (savedSuggestion) {
-      setSelectedSuggestion(JSON.parse(savedSuggestion));
-    }
-  }, [setSelectedSuggestion]);
-
-  useEffect(() => {
-    if (selectedSuggestion) {
-      localStorage.setItem(
-        "selectedSuggestion",
-        JSON.stringify(selectedSuggestion)
-      );
-    }
-  }, [selectedSuggestion]);
-
   return (
     <Box
       sx={{
@@ -61,7 +45,6 @@ const ReasoningBox = ({
           window.history.back();
           setSelectedSuggestion(null);
           setText("");
-          localStorage.removeItem("selectedSuggestion");
         }}
       >
         <KeyboardBackspaceIcon />

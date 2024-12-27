@@ -79,6 +79,6 @@ app.post("/evaluate", (req, res) => {
   return res.status(400).send("Either content or file is required");
 });
 
-app.listen(3000, () => {
+app.listen(5000, () => {
   console.log("Server listening on port 3000");
 });
