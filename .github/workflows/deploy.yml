@@ -35,4 +35,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync files to S3
-        run: aws s3 sync ./dist s3://terminal.centaur --delete
+        run: aws s3 sync ./dist s3://terminal.centaurinstitute.org --delete
