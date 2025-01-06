@@ -159,7 +159,11 @@ const ReasoningBox = ({
                 <Typography
                   variant="h7"
                 >
-                  {item.description}
+                  {item.type !== "query" && item.description}
+                  {item.type === "query" && "Answer: "}
+                  {item.type === "query" && item.description === "Query result" && !!item.rate && "true" }
+                  {item.type === "query" && item.description === "Query result" && !!!item.rate && "false" }
+                  {item.type === "query" && item.description !== "Query result" && item.description }
                 </Typography>
               </AccordionSummary>
             </Accordion>
