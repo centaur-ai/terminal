@@ -41,3 +41,24 @@ a:hover {
     transform: scale(0.8);
   }
 }
+
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+/* Style the scrollbar track (background) */
+::-webkit-scrollbar-track {
+  background: lightgray;
+}
+
+/* Style the scrollbar thumb (the handle) */
+::-webkit-scrollbar-thumb {
+  background: gray; /* Gray color */
+  border-radius: 6px; /* Optional: rounded corners */
+}
+
+/* Optional: Add hover effect for the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: darkgray; /* Slightly darker gray on hover */
+}

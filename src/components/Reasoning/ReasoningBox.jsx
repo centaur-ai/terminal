@@ -121,7 +121,10 @@ const ReasoningBox = ({
                     {item.type}
                   </Button>
                   <br/>
-                  {item.axiom}
+                  <Typography
+                  sx={{fontStyle: "italic"}}>
+                    {item.axiom}
+                  </Typography>
                 </Typography>
               </AccordionSummary>
               {
@@ -134,7 +137,7 @@ const ReasoningBox = ({
                     }}
                   >
                     <hr />
-                    <Typography>
+                    <Typography sx={{fontStyle: "italic"}}>
                       Best Theory:
                       <br/>
                       {bestTheory}
@@ -158,6 +161,9 @@ const ReasoningBox = ({
               >
                 <Typography
                   variant="h7"
+                  sx={{
+                    fontWeight: item.type === "query" ? "bold": "normal",
+                  }}
                 >
                   {item.type !== "query" && item.description}
                   {item.type === "query" && "Answer: "}
@@ -172,14 +178,11 @@ const ReasoningBox = ({
                 height: "35px",
                 width: "95%",
                 mt: -2,
-                bgcolor: "grey.400",
-                color: "black",
+                bgcolor: "grey.600",
+                color: "white",
               }}
             >
               <Typography
-                sx={{
-                  fontWeight: "bold",
-                }}
                 textAlign={"center"}
               >
                 Probability: {item.rate && parseFloat(item.rate).toFixed(2)}
