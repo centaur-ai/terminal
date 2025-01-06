@@ -99,9 +99,12 @@ const ReasoningBox = ({
               }}
             >
               <AccordionSummary
-                expandIcon={item.type === "query" ? <ExpandMoreIcon sx={{
+                expandIcon={item.type === "query" ? <ExpandMoreIcon
+                  titleAccess="Display this best theory"
+                  sx={{
                   pointerEvents: "auto"
-                }} /> : null}
+                    }}
+                /> : null}
                 sx={{
                   bgcolor: "grey.800",
                   pointerEvents: "none",
