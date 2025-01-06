@@ -39,7 +39,7 @@ const ReasoningBox = ({
       <Fab
         sx={{
           position: "absolute",
-          top: "15px",
+          top: "20px",
           left: "20px",
         }}
         size="small"
