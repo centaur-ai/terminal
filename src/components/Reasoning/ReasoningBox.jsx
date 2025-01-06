@@ -20,7 +20,9 @@ const ReasoningBox = ({
   setText,
   description,
   bestTheory,
+  reasoning
 }) => {
+  console.log(reasoning);
   return (
     <Box
       sx={{
@@ -72,7 +74,7 @@ const ReasoningBox = ({
             {description}
             <Box>
               <br />
-              <AutoAwesomeIcon
+              {reasoning && <AutoAwesomeIcon
                 sx={{
                   animation: "flash 2s infinite",
                   "@keyframes flash": {
@@ -82,6 +84,7 @@ const ReasoningBox = ({
                   },
                 }}
               />
+              }
             </Box>
           </Typography>
           <Divider sx={{ mt: 2, mb: 2 }} />
@@ -89,15 +92,20 @@ const ReasoningBox = ({
         {evaluate.map((item, index) => (
           <React.Fragment key={index}>
             <Accordion
+              TransitionProps={{ timeout: 50 }}
               sx={{
                 width: "100%",
                 mb: -2,
               }}
             >
               <AccordionSummary
-                expandIcon={item.type === "query" ? <ExpandMoreIcon /> : null}
+                expandIcon={item.type === "query" ? <ExpandMoreIcon sx={{
+                  pointerEvents: "auto"
+                }} /> : null}
                 sx={{
                   bgcolor: "grey.800",
+                  pointerEvents: "none",
+                  userSelect: "text",
                 }}
               >
                 <Typography
@@ -157,6 +165,8 @@ const ReasoningBox = ({
               <AccordionSummary
                 sx={{
                   bgcolor: "grey.800",
+                  userSelect: "text",
+                  pointerEvents: "none",
                 }}
               >
                 <Typography

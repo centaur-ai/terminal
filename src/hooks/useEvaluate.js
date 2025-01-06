@@ -12,9 +12,11 @@ function useEvaluate() {
   const [error, setError] = useState(null);
   const [bestTheory, setBestTheory] = useState(null);
   const { handleResponse } = useApi();
+  const [reasoning, setReasoning] = useState(false);
 
   const establishEventSource = useCallback(() => {
     const eventSource = new EventSource(`${config.api}/evaluate/${id}`);
+    setReasoning(true);
 
     eventSource.onmessage = (event) => {
       try {
@@ -37,11 +39,13 @@ function useEvaluate() {
     eventSource.onerror = (err) => {
       console.error("EventSource error:", err);
       setError(err);
+      setReasoning(false);
       setLoading(false);
       eventSource.close();
     };
 
     return () => {
+      setReasoning(false);
       eventSource.close();
     };
   }, []);
@@ -92,6 +96,7 @@ function useEvaluate() {
     postFile,
     description,
     bestTheory,
+    reasoning,
   };
 }
 

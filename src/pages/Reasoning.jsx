@@ -3,7 +3,7 @@ import ReasoningBox from "../components/Reasoning/ReasoningBox";
 import useEvaluate from "../hooks/useEvaluate";
 
 const Reasoning = () => {
-  const { evaluate, description, bestTheory } = useEvaluate();
+  const { evaluate, description, bestTheory, reasoning } = useEvaluate();
 
   return (
     <>
@@ -11,6 +11,7 @@ const Reasoning = () => {
         evaluate={evaluate}
         description={description}
         bestTheory={bestTheory}
+        reasoning={reasoning}
       />
     </>
   );
