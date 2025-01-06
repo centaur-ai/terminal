@@ -10,6 +10,7 @@ function useEvaluate() {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [bestTheory, setBestTheory] = useState(null);
   const { handleResponse } = useApi();
 
   const establishEventSource = useCallback(() => {
@@ -17,11 +18,14 @@ function useEvaluate() {
 
     eventSource.onmessage = (event) => {
       try {
-        const newData = JSON.parse(event.data);
-        if(newData.type === "system" && newData.event === "stream_start") {
-          setDescription(newData.description);
+        const data = JSON.parse(event.data);
+        if(data.type === "system" && data.event === "stream_start") {
+          setDescription(data.description);
+        } else if(data.type==="best_theory" ) {
+          console.log("Best theory:", data.axiom);
+          setBestTheory(data.axiom);
         } else {
-          setEvaluate((prevEvaluate) => [newData, ...prevEvaluate]);
+          setEvaluate((prevEvaluate) => [data, ...prevEvaluate]);
         }
       } catch (error) {
         console.error("Error parsing event data:", error);
@@ -87,6 +91,7 @@ function useEvaluate() {
     postMessage,
     postFile,
     description,
+    bestTheory,
   };
 }
 

@@ -3,13 +3,14 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
   Card,
   Divider,
   Fab,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
@@ -17,7 +18,8 @@ const ReasoningBox = ({
   evaluate,
   setSelectedSuggestion,
   setText,
-  description
+  description,
+  bestTheory,
 }) => {
   return (
     <Box
@@ -47,7 +49,6 @@ const ReasoningBox = ({
       >
         <KeyboardBackspaceIcon />
       </Fab>
-
       <Card
         sx={{
           display: "flex",
@@ -88,39 +89,75 @@ const ReasoningBox = ({
         {evaluate.map((item, index) => (
           <React.Fragment key={index}>
             <Accordion
-              expanded={true}
               sx={{
                 width: "100%",
-                borderRadius: "10px",
+                mb: -2,
               }}
             >
               <AccordionSummary
+                expandIcon={item.type === "query" ? <ExpandMoreIcon /> : null}
                 sx={{
-                  height: "65px",
                   bgcolor: "grey.800",
                 }}
               >
                 <Typography
                   variant="h6"
                   sx={{
-                    fontSize: "18px",
+                    fontSize: "16px",
                   }}
                 >
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "gray",
+                      color: "white",
+                      borderRadius: "10px",
+                      padding: "0px 0px",
+                      textTransform: "none",
+                    }}
+                    disableElevation
+                    disableRipple
+                  >
+                    {item.type}
+                  </Button>
+                  <br/>
                   {item.axiom}
                 </Typography>
               </AccordionSummary>
+              {
+                item.type === "query" ? (
+                  <AccordionDetails
+                    sx={{
+                      mb: -6,
+                      pb: 4,
+                      bgcolor: "grey.800",
+                    }}
+                  >
+                    <hr />
+                    <Typography>
+                      Best Theory:
+                      <br/>
+                      {bestTheory}
+                    </Typography>
+                  </AccordionDetails>
+                ) : null
+              }
+            </Accordion>
+            <Accordion
+              expanded={true}
+              sx={{
+                width: "100%",
+                borderRadius: "30px",
+              }}
+            >
               <Divider sx={{ bgcolor: "grey.600" }} />
               <AccordionSummary
                 sx={{
-                  height: "65px",
                   bgcolor: "grey.800",
                 }}
               >
                 <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: "18px",
-                  }}
+                  variant="h7"
                 >
                   {item.description}
                 </Typography>
@@ -128,7 +165,7 @@ const ReasoningBox = ({
             </Accordion>
             <AccordionDetails
               sx={{
-                height: "40px",
+                height: "35px",
                 width: "95%",
                 mt: -2,
                 bgcolor: "grey.400",
@@ -141,9 +178,10 @@ const ReasoningBox = ({
                 }}
                 textAlign={"center"}
               >
-                Theory Probability: {item.rate}
+                Probability: {item.rate && parseFloat(item.rate).toFixed(2)}
               </Typography>
             </AccordionDetails>
+            <br/>
           </React.Fragment>
         ))}
       </Card>
