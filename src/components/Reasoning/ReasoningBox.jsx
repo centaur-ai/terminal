@@ -9,7 +9,7 @@ import {
   Fab,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -19,7 +19,6 @@ const ReasoningBox = ({
   setSelectedSuggestion,
   setText,
   description,
-  bestTheory,
   reasoning
 }) => {
   console.log(reasoning);
@@ -99,7 +98,7 @@ const ReasoningBox = ({
               }}
             >
               <AccordionSummary
-                expandIcon={item.type === "query" ? <ExpandMoreIcon
+                expandIcon={item.type === "logical_form" ? <ExpandMoreIcon
                   titleAccess="Display this best theory"
                   sx={{
                   pointerEvents: "auto"
@@ -123,23 +122,25 @@ const ReasoningBox = ({
                       backgroundColor: "gray",
                       color: "white",
                       borderRadius: "10px",
-                      padding: "0px 0px",
+                      padding: "0px 2px",
                       textTransform: "none",
+                      mb: 1,
                     }}
                     disableElevation
                     disableRipple
                   >
-                    {item.type}
+                    {item.type === "logical_form"? "logical form" : item.type}
                   </Button>
                   <br/>
                   <Typography
                   sx={{fontStyle: "italic"}}>
-                    {item.axiom}
+                    {item.type !== "answer" && item.axiom}
+                    {item.type === "answer" && description}
                   </Typography>
                 </Typography>
               </AccordionSummary>
               {
-                item.type === "query" ? (
+                item.type === "logical_form" &&
                   <AccordionDetails
                     sx={{
                       mb: -6,
@@ -148,13 +149,25 @@ const ReasoningBox = ({
                     }}
                   >
                     <hr />
-                    <Typography sx={{fontStyle: "italic"}}>
-                      Best Theory:
+                    <Typography sx={{
+                      fontStyle: "italic",
+                      fontSize: 13,
+                    }}>
+                      Proof:
                       <br/>
-                      {bestTheory}
+                      {item.proof.steps.map(({step, formula, justification, theory_objects}) =>(
+                        <>
+                          Step: {step}
+                          <br/>
+                          Formula: {formula}
+                          <br/>
+                          Justification: {justification}
+                          <br/>
+                          Theory Objects: {theory_objects.join(", ")}
+                          <hr/>
+                        </>))}
                     </Typography>
                   </AccordionDetails>
-                ) : null
               }
             </Accordion>
             <Accordion
@@ -175,14 +188,11 @@ const ReasoningBox = ({
                 <Typography
                   variant="h7"
                   sx={{
-                    fontWeight: item.type === "query" ? "bold": "normal",
+                    fontWeight: item.type === "answer" ? "bold": "normal",
                   }}
                 >
-                  {item.type !== "query" && item.description}
-                  {item.type === "query" && "Answer: "}
-                  {item.type === "query" && item.description === "Query result" && !!item.rate && "true" }
-                  {item.type === "query" && item.description === "Query result" && !!!item.rate && "false" }
-                  {item.type === "query" && item.description !== "Query result" && item.description }
+                  {item.type !== "answer" && item.description}
+                  {item.type === "answer" && `Answer: ${item.result}`}
                 </Typography>
               </AccordionSummary>
             </Accordion>
@@ -198,7 +208,8 @@ const ReasoningBox = ({
               <Typography
                 textAlign={"center"}
               >
-                Probability: {item.rate && parseFloat(item.rate).toFixed(2)}
+                {item.type !== "answer" && `Probability: ${parseFloat(item.theory_log_probability).toFixed(2)}`}
+                {item.type === "answer" && `True Rate: ${parseFloat(item.true_rate).toFixed(2)} -  False Rate: ${parseFloat(item.false_rate).toFixed(2)}`}
               </Typography>
             </AccordionDetails>
             <br/>

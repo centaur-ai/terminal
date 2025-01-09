@@ -23,9 +23,6 @@ function useEvaluate() {
         const data = JSON.parse(event.data);
         if(data.type === "system" && data.event === "stream_start") {
           setDescription(data.description);
-        } else if(data.type==="best_theory" ) {
-          console.log("Best theory:", data.axiom);
-          setBestTheory(data.axiom);
         } else {
           setEvaluate((prevEvaluate) => [data, ...prevEvaluate]);
         }
