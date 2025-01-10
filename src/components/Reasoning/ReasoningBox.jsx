@@ -209,7 +209,7 @@ const ReasoningBox = ({
                 textAlign={"center"}
               >
                 {item.type !== "answer" && `Probability: ${parseFloat(item.theory_log_probability).toFixed(2)}`}
-                {item.type === "answer" && `True Rate: ${parseFloat(item.true_rate).toFixed(2)} -  False Rate: ${parseFloat(item.false_rate).toFixed(2)}`}
+                {item.type === "answer" && `True Probability: ${parseFloat(item.true_rate).toFixed(2)} -  False Probability: ${parseFloat(item.false_rate).toFixed(2)}`}
               </Typography>
             </AccordionDetails>
             <br/>
