@@ -129,7 +129,7 @@ const ReasoningBox = ({
                     disableElevation
                     disableRipple
                   >
-                    {item.type === "logical_form"? "logical form" : item.type}
+                    {item.theory_log_probability === null ? "query" : item.type === "logical_form" ? "logical form" : item.type}
                   </Button>
                   <br/>
                   <Typography
@@ -196,7 +196,7 @@ const ReasoningBox = ({
                 </Typography>
               </AccordionSummary>
             </Accordion>
-            <AccordionDetails
+            {item.theory_log_probability !== null && <AccordionDetails
               sx={{
                 height: "35px",
                 width: "95%",
@@ -208,10 +208,10 @@ const ReasoningBox = ({
               <Typography
                 textAlign={"center"}
               >
-                {item.type !== "answer" && `Probability: ${parseFloat(item.theory_log_probability).toFixed(2)}`}
-                {item.type === "answer" && `True Probability: ${parseFloat(item.true_rate).toFixed(2)} -  False Probability: ${parseFloat(item.false_rate).toFixed(2)}`}
+                {item.type !== "answer" && `Log Probability: ${parseFloat(item.theory_log_probability).toFixed(2)}`}
+                {item.type === "answer" && `True Probability: ${parseFloat(item.true_rate).toFixed(2)}`}
               </Typography>
-            </AccordionDetails>
+            </AccordionDetails>}
             <br/>
           </React.Fragment>
         ))}
