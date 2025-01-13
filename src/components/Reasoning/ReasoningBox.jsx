@@ -103,7 +103,7 @@ const ReasoningBox = ({
           </Typography>
           <Divider sx={{ mt: 2, mb: 2 }} />
         </Box>
-        {evaluate.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map((item) => (
+        {evaluate.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item) => (
           <React.Fragment key={item.id}>
             <Accordion
               TransitionProps={{ timeout: 50 }}
@@ -149,9 +149,6 @@ const ReasoningBox = ({
                   <br/>
                   <Typography
                   sx={{fontStyle: "italic"}}>
-                    {item.id}
-                    {item.created_at}
-                    <br/>
                     {item.type !== "answer" && item.axiom}
                     {item.type === "answer" && query}
                   </Typography>
