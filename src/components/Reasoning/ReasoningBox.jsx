@@ -9,7 +9,7 @@ import {
   Fab,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -22,17 +22,7 @@ const ReasoningBox = ({
   query,
   reasoning
 }) => {
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    if (cardRef.current) {
-      cardRef.current.scrollTo({
-        top: cardRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [evaluate]);
-
+  console.log(reasoning);
   return (
     <Box
       sx={{
@@ -62,7 +52,6 @@ const ReasoningBox = ({
         <KeyboardBackspaceIcon />
       </Fab>
       <Card
-        ref={cardRef}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -103,8 +92,8 @@ const ReasoningBox = ({
           </Typography>
           <Divider sx={{ mt: 2, mb: 2 }} />
         </Box>
-        {evaluate.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)).map((item) => (
-          <React.Fragment key={item.id}>
+        {evaluate.map((item, index) => (
+          <React.Fragment key={index}>
             <Accordion
               TransitionProps={{ timeout: 50 }}
               sx={{
@@ -149,9 +138,6 @@ const ReasoningBox = ({
                   <br/>
                   <Typography
                   sx={{fontStyle: "italic"}}>
-                    {item.id}
-                    {item.created_at}
-                    <br/>
                     {item.type !== "answer" && item.axiom}
                     {item.type === "answer" && query}
                   </Typography>
