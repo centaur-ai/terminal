@@ -8,6 +8,7 @@ function useEvaluate() {
   const { id } = useParams();
   const [evaluate, setEvaluate] = useState([]);
   const [description, setDescription] = useState("");
+  const [query, setQuery] = useState("")
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bestTheory, setBestTheory] = useState(null);
@@ -23,6 +24,7 @@ function useEvaluate() {
         const data = JSON.parse(event.data);
         if(data.type === "system" && data.event === "stream_start") {
           setDescription(data.description);
+          setQuery(data.query);
         } else {
           setEvaluate((prevEvaluate) => [data, ...prevEvaluate]);
         }
@@ -92,6 +94,7 @@ function useEvaluate() {
     postMessage,
     postFile,
     description,
+    query,
     bestTheory,
     reasoning,
   };

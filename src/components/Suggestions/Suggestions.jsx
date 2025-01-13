@@ -29,7 +29,7 @@ function Suggestions({ suggestion, handleClick, smDown }) {
         <Typography
           sx={{ textAlign: "left", fontSize: smDown ? "10px" : "14px" }}
         >
-          {suggestion.description}
+          {suggestion.description.length > 100 ? suggestion.description.slice(0, 122) + " ..." :suggestion.description }
         </Typography>
       </Stack>
     </Button>

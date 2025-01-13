@@ -19,6 +19,7 @@ const ReasoningBox = ({
   setSelectedSuggestion,
   setText,
   description,
+  query,
   reasoning
 }) => {
   console.log(reasoning);
@@ -71,6 +72,9 @@ const ReasoningBox = ({
         >
           <Typography sx={{ textAlign: "center", fontSize: "18px" }}>
             {description}
+            <br/>
+            <hr width={100}/>
+            Query: {query}
             <Box>
               <br />
               {reasoning && <AutoAwesomeIcon
@@ -135,7 +139,7 @@ const ReasoningBox = ({
                   <Typography
                   sx={{fontStyle: "italic"}}>
                     {item.type !== "answer" && item.axiom}
-                    {item.type === "answer" && description}
+                    {item.type === "answer" && query}
                   </Typography>
                 </Typography>
               </AccordionSummary>
