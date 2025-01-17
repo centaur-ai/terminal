@@ -149,9 +149,6 @@ const ReasoningBox = ({
                   <br/>
                   <Typography
                   sx={{fontStyle: "italic"}}>
-                    {item.id}
-                    {item.created_at}
-                    <br/>
                     {item.type !== "answer" && item.axiom}
                     {item.type === "answer" && query}
                   </Typography>
